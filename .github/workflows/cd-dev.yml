@@ -16,4 +16,6 @@ jobs:
             echo "Missing DEV_DEPLOY_HOOK secret. Set it in GitHub Settings → Secrets."
             exit 1
           fi
-          curl -X POST "$DEV_DEPLOY_HOOK"
+          echo "Triggering Render deploy hook..."
+          curl -fsS -X POST "$DEV_DEPLOY_HOOK"
+          echo "Deploy hook triggered successfully."
