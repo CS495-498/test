@@ -1,1 +1,2 @@
 "# Triggering CI" 
+"ci check" 
