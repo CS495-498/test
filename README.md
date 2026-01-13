@@ -49,7 +49,7 @@ git push -u origin main
 
 ## Part B — Rename `main` → `dev` (recommended approach)
 
-**GitHub UI (recommended for demo):**
+**GitHub UI:**
 1. Repo → **Settings → Branches**
 2. Rename branch: `main` → `dev`
 3. Set default branch to `dev`
@@ -81,14 +81,14 @@ Go to **Settings → Branches → Add branch protection rule**.
 - Require status checks to pass before merging
   - Select check: **CI**
 - Require branches to be up to date before merging
-- (Optional) Require 1 approval
+- Require 2 approvals
 
 ### Protect `prod`
 - Require a pull request before merging
 - Require status checks to pass before merging
   - Select check: **CI**
 - Require branches to be up to date before merging
-- (Recommended) Require 1–2 approvals
+- Require 2 approvals
 - (Optional) Restrict who can push
 
 ## Part E — Optional: CD deploy hooks
@@ -102,7 +102,7 @@ If you are using Render/Railway/Fly.io deploy hooks:
 
 ---
 
-# Live Demo Flow (What to show students)
+# Live Demo Flow
 
 ## 1) Successful PR into `dev`
 
@@ -138,7 +138,7 @@ On GitHub:
 - Show CI fails
 - Show merge is blocked by required checks
 
-**Fix within same PR (optional):**
+**Fix within same PR:**
 ```bash
 # Revert to expect(200)
 git add .
@@ -172,19 +172,4 @@ On GitHub:
 - Show merge blocked
 
 ---
-
-# Talking Points (keep it simple)
-
-- Humans push code to feature branches.
-- GitHub branch protection blocks direct pushes to `dev` and `prod`.
-- CI runs tests automatically and blocks merges when tests fail.
-- CD deploys automatically after merges (when configured).
-
----
-
-## Troubleshooting (common)
-
-- CI not running? Check Actions tab and workflow file path: `.github/workflows/ci.yml`
-- Status check not selectable in branch protection? Run the workflow once (push to `dev`) so GitHub registers it.
-- CD failing? Either set deploy hook secrets or disable CD workflows for the demo.
 
