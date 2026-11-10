@@ -1,175 +1,87 @@
-# CS 498 CI/CD Demo Repo (Node.js)
+# CS 495 CI/CD Demo Project
 
-This repository is a **mock Node.js (Express) application** designed for a live classroom demo of:
+A deliberately small project for demonstrating Continuous Integration and Continuous Deployment with GitHub Actions.
 
-- Branching model: `feature/*` → `dev` → `prod`
-- Branch protections on `dev` and `prod`
-- GitHub Actions CI on PRs
-- Optional CD using deploy hooks (Render/Railway/etc.)
+## What the project does
 
-## 1) Run locally
+- `site/` contains a static sprint-status page.
+- `site/logic.js` contains a small testable function.
+- `test/` contains Node's built-in automated tests.
+- `scripts/build.mjs` builds the deployable `dist/` directory.
+- `.github/workflows/ci.yml` runs CI for pull requests to `Dev` and `Prod`.
+- `.github/workflows/deploy.yml` deploys `Prod` to GitHub Pages after tests and build succeed.
+
+No npm dependencies are required.
+
+## Run locally
+
+Requires Node.js 20+.
 
 ```bash
-npm install
 npm test
-npm start
-# open http://localhost:3000/health
+npm run build
 ```
 
-## 2) Repo contents
+After `npm run build`, the deployable site is in `dist/`.
 
-- `src/` Express app with `/health`
-- `test/` Mocha + Supertest test suite
-- `.github/workflows/ci.yml` runs tests on PRs into `dev` or `prod`
-- `.github/workflows/cd-dev.yml` triggers deploy hook on push to `dev`
-- `.github/workflows/cd-prod.yml` triggers deploy hook on push to `prod`
-- `Dockerfile` shows how to package the app as an artifact
+## Repository branch model
 
----
+This demo follows the CS 495 model:
 
-# README Demo Script
+```text
+feature/* -> Dev -> Prod
+              CI      CI + CD
+```
 
-This script assumes you created a new GitHub repository named **test** and have this code locally.
+- Feature branches contain individual work.
+- `Dev` is the integration branch.
+- `Prod` is the stable/release branch.
+- Pull requests should be used for both feature -> Dev and Dev -> Prod.
 
-## Part A — Create repo and push initial commit
+## First-time GitHub setup
 
-1. Create GitHub repo: `test`
-2. In this folder:
+Create an empty repository on GitHub. From this project directory:
 
 ```bash
-npm install
-npm test
 git init
-git branch -M main
 git add .
-git commit -m "Initial mock Node.js app with tests and GitHub Actions CI/CD"
-git remote add origin https://github.com/<ORG_OR_USER>/test.git
-git push -u origin main
+git commit -m "Initial CI/CD demo"
+git branch -M Dev
+git remote add origin YOUR_REPOSITORY_URL
+git push -u origin Dev
+
+git checkout -b Prod
+git push -u origin Prod
+git checkout Dev
 ```
 
-## Part B — Rename `main` → `dev` (recommended approach)
-
-**GitHub UI:**
-1. Repo → **Settings → Branches**
-2. Rename branch: `main` → `dev`
-3. Set default branch to `dev`
-
-**Sync locally:**
-```bash
-git fetch origin
-git branch -m main dev
-git branch -u origin/dev dev
-git remote set-head origin -a
-git pull
-```
-
-## Part C — Create `prod` branch
-
-```bash
-git checkout dev
-git checkout -b prod
-git push -u origin prod
-git checkout dev
-```
-
-## Part D — Branch protections (GitHub UI)
-
-Go to **Settings → Branches → Add branch protection rule**.
-
-### Protect `dev`
-- Require a pull request before merging
-- Require status checks to pass before merging
-  - Select check: **CI**
-- Require branches to be up to date before merging
-- Require 2 approvals
-
-### Protect `prod`
-- Require a pull request before merging
-- Require status checks to pass before merging
-  - Select check: **CI**
-- Require branches to be up to date before merging
-- Require 2 approvals
-- (Optional) Restrict who can push
-
-## Part E — Optional: CD deploy hooks
-
-If you are using Render/Railway/Fly.io deploy hooks:
-- Add GitHub Action secrets:
-  - `DEV_DEPLOY_HOOK`
-  - `PROD_DEPLOY_HOOK`
-
-(If you do not want to deploy today, you can leave these unset; CI will still work. CD workflows will fail if triggered without secrets.)
-
----
-
-# Live Demo Flow
-
-## 1) Successful PR into `dev`
-
-```bash
-git checkout dev
-git pull
-git checkout -b feature/add-message
-# Edit src/app.js and change the "/" message text
-git add .
-git commit -m "Update home route message"
-git push -u origin feature/add-message
-```
+### Enable GitHub Pages
 
 On GitHub:
-- Open PR: `feature/add-message` → `dev`
-- Show CI runs and passes
-- Merge PR (merge should be allowed)
 
-## 2) Unsuccessful PR into `dev` (CI fails)
+1. Open **Settings -> Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
 
-```bash
-git checkout dev
-git pull
-git checkout -b feature/break-tests
-# Edit test/health.test.js and change expect(200) to expect(404)
-git add .
-git commit -m "Intentionally break tests for demo"
-git push -u origin feature/break-tests
-```
+The `deploy.yml` workflow deploys the `dist/` directory when code is pushed to `Prod`.
 
-On GitHub:
-- Open PR: `feature/break-tests` → `dev`
-- Show CI fails
-- Show merge is blocked by required checks
+### Recommended branch protection / rulesets
 
-**Fix within same PR:**
-```bash
-# Revert to expect(200)
-git add .
-git commit -m "Fix tests"
-git push
-```
+Protect both `Dev` and `Prod`.
 
-## 3) Successful PR from `dev` → `prod`
+For `Dev`:
 
-On GitHub:
-- Open PR: `dev` → `prod`
-- Show CI passes
-- Merge PR
-- Show CD-prod workflow triggers (if hooks configured)
+- require a pull request before merging;
+- require status checks;
+- select `CI - Tests` and `CI - Build` after they have run at least once;
+- optionally require one approving review.
 
-## 4) Unsuccessful PR into `prod` (blocked)
+For `Prod`:
 
-```bash
-git checkout dev
-git pull
-git checkout -b feature/break-prod-demo
-# Break tests again or introduce a syntax error
-git add .
-git commit -m "Break build for prod demo"
-git push -u origin feature/break-prod-demo
-```
+- require a pull request before merging;
+- require status checks;
+- select `CI - Tests` and `CI - Build`;
+- do not allow direct pushes for normal student work.
 
-On GitHub:
-- Open PR: `feature/break-prod-demo` → `prod`
-- Show CI fails
-- Show merge blocked
+## Classroom demo
 
----
-
+See `DEMO_SCRIPT.md` for the exact sequence.
