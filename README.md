@@ -78,4 +78,3 @@ For `Prod`:
 - require a pull request before merging;
 - require status checks;
 - select `CI - Tests` and `CI - Build`;
-- do not allow direct pushes for normal student work.
