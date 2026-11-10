@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS 495 CI/CD Demo</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">CS 495 CI/CD DEMO</p>
+    <h1>Capstone Sprint Status</h1>
+    <p>This page is automatically deployed from the <code>Prod</code> branch after the pipeline succeeds.</p>
+
+    <section class="card" aria-labelledby="progress-heading">
+      <h2 id="progress-heading">Current progress</h2>
+      <p><strong id="completed">0</strong> of <strong id="total">0</strong> stories completed</p>
+      <div class="progress-track" aria-label="Sprint completion">
+        <div id="bar" class="progress-bar"></div>
+      </div>
+      <p class="percentage" id="progress">0%</p>
+    </section>
+
+    <p class="note">Change the code, open a pull request, let CI test it, then merge to <code>Prod</code> to deploy.</p>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

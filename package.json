@@ -1,20 +1,13 @@
 {
-  "name": "cs498-cicd-demo",
+  "name": "cs495-cicd-demo",
   "version": "1.0.0",
   "private": true,
-  "description": "Mock Node.js app for CS498 CI/CD demo",
-  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node src/server.js",
-    "test": "mocha --recursive",
-    "smoke": "node -e \"require('http').get(process.env.SMOKE_URL || 'http://localhost:3000/health', r => process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))\""
+    "test": "node --test",
+    "build": "node scripts/build.mjs"
   },
-  "dependencies": {
-    "express": "^4.19.2"
-  },
-  "devDependencies": {
-    "mocha": "^10.4.0",
-    "supertest": "^7.0.0"
+  "engines": {
+    "node": ">=20"
   }
 }
