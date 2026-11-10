@@ -1,6 +1,6 @@
 import { calculateProgress } from "./logic.js";
 
-const completed = 7;
+const completed = 9;
 const total = 10;
 const progress = calculateProgress(completed, total);
 
