@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test",
+    "test": "node --test test/logic.test.js",
     "build": "node scripts/build.mjs"
   },
   "engines": {
