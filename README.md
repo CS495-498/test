@@ -1,6 +1,6 @@
 # CS 495 CI/CD Demo Project
 
-A deliberately small project for demonstrating Continuous Integration and Continuous Deployment with GitHub Actions.
+Project for demonstrating Continuous Integration and Continuous Deployment with GitHub Actions.
 
 ## What the project does
 
@@ -25,8 +25,6 @@ npm run build
 After `npm run build`, the deployable site is in `dist/`.
 
 ## Repository branch model
-
-This demo follows the CS 495 model:
 
 ```text
 feature/* -> Dev -> Prod
@@ -81,7 +79,3 @@ For `Prod`:
 - require status checks;
 - select `CI - Tests` and `CI - Build`;
 - do not allow direct pushes for normal student work.
-
-## Classroom demo
-
-See `DEMO_SCRIPT.md` for the exact sequence.
