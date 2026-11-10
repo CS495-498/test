@@ -77,4 +77,4 @@ For `Prod`:
 
 - require a pull request before merging;
 - require status checks;
-- select `CI - Tests` and `CI - Build`;
+- select `CI - Tests` and `CI - Build`;;
