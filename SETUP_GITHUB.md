@@ -56,14 +56,13 @@ CI - Build
 
 Use a branch protection rule or repository ruleset for `Dev`.
 
-Recommended classroom settings:
+Recommended settings:
 
 - Require a pull request before merging.
 - Require status checks before merging.
 - Require `CI - Tests`.
 - Require `CI - Build`.
 - Optionally require one approving review.
-- Do not allow routine direct pushes.
 
 ## 6. Protect `Prod`
 
@@ -74,7 +73,6 @@ Recommended:
 - Require pull request before merging.
 - Require `CI - Tests`.
 - Require `CI - Build`.
-- Treat `Prod` as release-only.
 
 ## 7. Confirm deployment
 

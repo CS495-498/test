@@ -2,7 +2,7 @@ name: CD - Deploy to GitHub Pages
 
 on:
   push:
-    branches: [Prod]
+    branches: [prod]
   workflow_dispatch:
 
 permissions:
